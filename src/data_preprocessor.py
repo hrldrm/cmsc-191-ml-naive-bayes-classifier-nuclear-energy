@@ -17,8 +17,9 @@ def preprocess(index):
     data = pd.read_csv(index, sep=",", engine='python', dtype="object")
     data = data.drop(['sentiment_confidence_summary'], axis=1)
     # sentiments = pd.DataFrame(data.groupby('sentiment').agg(
-                                # {'sentiment': ['count']}))
-    data['sentiment'] = data['sentiment'].map({'Negative': 0, 'Positive': 1, 'Neutral / author is just sharing information': 2, 'Tweet NOT related to nuclear energy': 3})
+    # {'sentiment': ['count']}))
+    data['sentiment'] = data['sentiment'].map(
+        {'Negative': 0, 'Positive': 1, 'Neutral / author is just sharing information': 2, 'Tweet NOT related to nuclear energy': 3})
     data['tweet_text_tokens'] = data['tweet_text'].apply(_preprocess_text)
     data = data.dropna()
     data.to_csv(path.join(dataset_path, csv_path))
@@ -35,4 +36,4 @@ def _preprocess_text(text):
 
 
 if __name__ == "__main__":
-    preprocess(path.join(dataset_path, dataset_name))    
+    preprocess(path.join(dataset_path, dataset_name))
