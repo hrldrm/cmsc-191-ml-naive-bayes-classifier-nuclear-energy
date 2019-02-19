@@ -19,7 +19,10 @@ def preprocess(index):
     # sentiments = pd.DataFrame(data.groupby('sentiment').agg(
     # {'sentiment': ['count']}))
     data['sentiment'] = data['sentiment'].map(
-        {'Negative': 0, 'Positive': 1, 'Neutral / author is just sharing information': 2, 'Tweet NOT related to nuclear energy': 3})
+        {'Negative': 0,
+         'Positive': 1,
+         'Neutral / author is just sharing information': 2,
+         'Tweet NOT related to nuclear energy': 3})
     data['tweet_text_tokens'] = data['tweet_text'].apply(_preprocess_text)
     data = data.dropna()
     data.to_csv(path.join(dataset_path, csv_path))
@@ -30,9 +33,8 @@ def _preprocess_text(text):
     text = re.sub('RT|@mention|{.*}|\[.*\]|\&.*\;|�_�|�|��|[0-9]', '', text)
     text = [char for char in text
             if char.lower() not in string.punctuation]
-    text = ''.join(text)
-    return [word for word in text.split() if word.lower() not in
-            stopwords.words('english')]
+    text = ''.join(tex in text.split() if word.lower() not in
+                   stopwords.words('english')]
 
 
 if __name__ == "__main__":
